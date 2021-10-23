@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:time_tracker_flutter_course/app/service/auth.dart';
 
 class HomePage extends StatelessWidget {
-  final AuthBase auth;
-  const HomePage({Key key, @required this.auth}) : super(key: key);
+  const HomePage({Key key}) : super(key: key);
 
-  Future<void> _signOut() async {
+  Future<void> _signOut(BuildContext context) async {
     try {
-      await auth.signOut();
-    } catch (error) {
-      print(errorPropertyTextConfiguration.toString());
-    }
+      await Provider.of<AuthBase>(context, listen: false).signOut();
+    } catch (error) {}
   }
 
   @override
@@ -27,7 +25,7 @@ class HomePage extends StatelessWidget {
               'Logout',
               style: TextStyle(color: Colors.white, fontSize: 15),
             ),
-            onPressed: _signOut,
+            onPressed: () => _signOut(context),
           ),
         ],
       ),
